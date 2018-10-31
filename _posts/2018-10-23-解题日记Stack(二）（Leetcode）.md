@@ -39,6 +39,7 @@ tags:
 leetcode关于`stack`的题蛮多的，拿下面这些题来作例子吧。
 
 
+
 ## [456. 132 Pattern](https://leetcode.com/problems/132-pattern/description/)
 ```c
 bool find132pattern(int* nums, int numsSize) {
@@ -379,7 +380,7 @@ int largestRectangleArea(int* heights, int heightsSize) {
 栈构建完成，满足升序条件，因此按照升序处理办法得到上述的max(height[i]\*(size-i))=max{3\*1, 2\*2, 2\*3, 2\*4, 1\*5, 1\*6}=8<10
 
 
-
+更多stack例题解答可以参考[我的解答](https://github.com/TuoAiTang/LeetCode),也欢迎访问我下方的的Leetcode主页，晚安~
 
 
 
