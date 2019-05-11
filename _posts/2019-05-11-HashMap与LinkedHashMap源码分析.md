@@ -90,7 +90,7 @@ class LinkedHashMap extends HashMap{
     }
 ```
    
-将键对象自身的hashcode进行了一个位操作，应用这个变换，可以将高位的影响传递到hashcode中。有效的避免冲突，但有些时候对象的hashcode已经是分布良好的，那么，这样的对象不会从这个变换中获益。该变换比较适用于比较小的table，因为这样的table高位全为。
+将键对象自身的hashcode进行了一个位操作，应用这个变换，可以将高位的影响传递到hashcode中。有效的避免冲突，但有些时候对象的hashcode已经是分布良好的，那么，这样的对象不会从这个变换中获益。该变换比较适用于比较小的table，因为这样的table高位全为0。
 
 ### HashMap判断是否包含一个对象之getNode(hash(key), key)方法
 ```java
@@ -203,7 +203,7 @@ get方法中没有调用afterNodeAccess()是因为，在LinkedHashMap中重写�
 ## LinkedHashMap
 ### 继承自HashMap, 继承了绝大部分方法
 
-但增加了一个继承自HashMap.Node的Entry类。维护了一个	双向链表。可以实现元素的顺序访问(两种顺序： accessOrder)。顺序访问依赖于map.entrySet().iterator()，该方法会创建一个该Map所维护的那个双向链表的迭代器，从而以LinkedList的顺序访问Entry.	
+但增加了一个继承自HashMap.Node的Entry类。维护了一个	双向链表。可以实现元素的顺序访问(两种顺序： accessOrder)。顺序访问依赖于map.entrySet().iterator()，该方法会创建一个该Map所维护的那个双向链表的迭代器，从而以LinkedList的顺序访问Entry。
 
 ```java
 	/**
@@ -238,20 +238,22 @@ get方法中没有调用afterNodeAccess()是因为，在LinkedHashMap中重写�
 按访问顺序访问：
 
 ```java
-	Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>(10, 0.75f, true);
-		map.put(1, 2);
-		map.put(3, 4);
-		map.put(5, 6);
-		map.get(1);
-		Iterator<Map.Entry<Integer, Integer>> it = map.entrySet().iterator();
-		while(it.hasNext()){
-			System.out.println(it.next());
-		}
+Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>(10, 0.75f, true);
+map.put(1, 2);
+map.put(3, 4);
+map.put(5, 6);
+map.get(1);
+Iterator<Map.Entry<Integer, Integer>> it = map.entrySet().iterator();
+while(it.hasNext()){
+	System.out.println(it.next());
+}   
 ```
 
 > 	3=4
 	5=6
 	1=2
+
+    
 
 ### 重写/实现了HashMap中的回调方法
 
@@ -354,6 +356,8 @@ public static void main(String[] args) {
 	recently least key=1
 	recently least key=3
 	{5=5, 6=6, 2=2, 7=7, 4=4}
+
+
 
 
 
