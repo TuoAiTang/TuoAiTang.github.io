@@ -259,7 +259,7 @@ while(it.hasNext()){
 
 ### 重写/实现了HashMap中的回调方法
 
-```JAVA
+```java
 void afterNodeAccess(Node<K,V> e) { // move node to last
     //omitted
 }
