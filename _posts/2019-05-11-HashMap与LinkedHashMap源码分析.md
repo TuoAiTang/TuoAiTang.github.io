@@ -163,6 +163,48 @@ if (hiTail != null) {
 
 因此用`map.get(key) == null`并不能总是正确的等价与`containsKey(key)`。
 同时，hashtable既不允许null键，也不允许null值。会在运行时报出异常。
+鉴于Hashtable是早于HashMap出现的，我认为这一点限制是完全可以像HashMap那样进行改进的。
+这也许算是Hashtable的一个缺陷吧，好在Hashtable在并发上因为读写方法都加锁，导致并发性能也不理想的原因，也逐渐不被使用了。
+
+Hashtable部分源码：
+```java
+public synchronized V put(K key, V value) {
+        // Make sure the value is not null
+        if (value == null) {
+            throw new NullPointerException();
+        }
+
+        // Makes sure the key is not already in the hashtable.
+        Entry<?,?> tab[] = table;
+        /* 
+        这一行就和HashMap不同，导致这一行当key == null时， 因为直接引用key.hashCode()抛出异常
+        而HashMap中调用putVal(hash(key), key, value, false, true)
+        
+        static final int hash(Object key) {
+            int h;
+            return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+        }
+
+        因此不会因为key为空而抛出异常
+         */
+        int hash = key.hashCode();  
+
+        int index = (hash & 0x7FFFFFFF) % tab.length;
+        @SuppressWarnings("unchecked")
+        Entry<K,V> entry = (Entry<K,V>)tab[index];
+        for(; entry != null ; entry = entry.next) {
+            if ((entry.hash == hash) && entry.key.equals(key)) {
+                V old = entry.value;
+                entry.value = value;
+                return old;
+            }
+        }
+
+        addEntry(hash, key, value, index);
+        return null;
+    }
+```
+
 
 ```java
 Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -182,6 +224,8 @@ public V get(Object key) {
 ```
 
 也就是说e.value == null时，map中还是有这个键值对的。
+
+
 
 ### 预留回调函数的机制, 为了继承自HashMap的LinkedHashMap
 
