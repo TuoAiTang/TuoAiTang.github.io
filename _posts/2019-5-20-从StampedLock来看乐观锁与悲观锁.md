@@ -1,6 +1,6 @@
 ---
 layout:       post
-title:        "从StampedLock的来看乐观锁与悲观锁"
+title:        "从StampedLock来看乐观锁与悲观锁"
 subtitle:     "从使用到实现"
 date:         2019-5-20 23：00
 catalog:      true
@@ -16,7 +16,7 @@ tags:
 StampedLock没有直接使用aqs的同步器，而是自己维护了一个CLH队列。
 
 
-![类结构](/img/aqs/stampedlock_struct.jpg)
+![类结构](/img/aqs/stampedlock_struct.png)
 
 其实stamped lock分为三种模式。
 
