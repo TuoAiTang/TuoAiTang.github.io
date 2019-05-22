@@ -11,31 +11,39 @@ tags:
 # Bean
 
 ## 配置
-配置好的bean可以直接通过spring的上下文获取。
-而配置只用告诉spring，一个xml文件的路径，spring就会基于这个xml生成一个对应的context对象。
+配置好的bean可以直接通过spring的**上下文**获取。
+而配置只用告诉spring，一个**xml文件**的路径，spring就会基于这个xml生成一个对应的`context`对象。
 类似 `Bean b = context.getBean("Bean.id")`.
 
 ### 配置项
 
-- id 唯一标识
+- id **唯一标识**
+
 - class 具体要实例化的类
-- scope	范围/作用域
-1. singleton	一个Bean容器只存在一份，但是可以基于一份xml文件生成两个context，这两个context容器可以有各自的单例对象
-2. prototype	每次请求/使用时创建新的实例，destroy不生效，自动回收
-3. request	每次http请求创建一个实例且只在这个实例有效
+
+- scope	**范围/作用域**
+
+1. singleton	**一个Bean容器只存在一份**，但是可以基于一份xml文件生成两个context，这两个context容器可以有**各自的单例对象**
+2. prototype	每次请求/使用时创建**新的实例**，destroy不生效，自动回收
+3. request	**每次http请求**创建一个实例且只在这个**request**有效
 4. session
 5. global session	基于portlet（连接多个系统，例如OA、HR系统）的web应用中有效
 - constructor arg 构造器参数
+
 - properties	属性
+
 - Autowiring mode	自动装配的方式
+
 - lazy-initialization mode
+
 - initialization/destruction method
 
 ### XML方式
 **spring-ioc.xml**
 ```xml
 <beans>
-	<bean id="oneInterface" class="com.tuo.interface.OneInterfaceImpl"></bean>
+	<bean id="oneInterface" 
+		class="com.tuo.interface.OneInterfaceImpl"></bean>
 </beans>
 ```
 
@@ -70,12 +78,14 @@ tags:
 
 2. 初始化
 全局：
+
 ```xml
 <beans 	...	...	...
 	default-init-method="init" default-destroy-method="destroy">
 
 </beans>
 ```
+
 具体类：
 - 实现`org.springframework.beans.factory.InitializingBean`接口， 覆盖`afterPropertisSet`方法
 - 配置`init-method`方法
@@ -122,7 +132,9 @@ tags:
 - ByteArrayResource
 
 ### ResourceLoader
-它是一个接口。
+
+它是一个**接口**。
+
 ```java
 public interface ResourceLoader{
 	Resource getResource(String location);
@@ -144,53 +156,66 @@ public interface ResourceLoader{
 
 - @Autowired 适用于setter方法、构造方法、和成员变量。与`@Requred`效果类似。
 
-默认情况下，如果找不到合适的bean来注入属性，将会导致autowiring失败并抛出异常。可以通过`@Autowired(required=false)`来避免.
+	默认情况下，如果找不到合适的bean来注入属性，将会导致autowiring失败并抛出异常。可以通过`@Autowired(required=false)`来避免.
 
-每个类只有一个构造器可以被注解为`@Autowired(required=true)`.
+	每个类只有一个构造器可以被注解为`@Autowired(required=true)`.
 
-`@Autowired`的必要属性建议使用传统的`@Required`.
+	`@Autowired`的必要属性建议使用传统的`@Required`.
 
-常用于注解那些众所周知的解析依赖性接口，比如：`BeanFactory`, `ApplicationContext`, `ResourceLoader`
+	常用于注解那些众所周知的解析依赖性接口，比如：`BeanFactory`, `ApplicationContext`, `ResourceLoader`
 
-还可以实现数组或Map的自动注入。
+	还可以实现数组或Map的自动注入。
 
 # Bean容器context
 
 ## 基础
-- org.springframework.beans
-- org.springframework.context
-- BeanFactory,提供配置结构和基本功能，加载并初始化Bean
-- ApplicationContext,保存了Bean对象并在Spring中广泛使用
+1. 包依赖：
+
+	- `org.springframework.beans`
+	- `org.springframework.context`
+
+2. 核心类：
+
+	- `BeanFactory`,提供配置结构和基本功能，加载并初始化Bean
+	- `ApplicationContext`,保存了Bean对象并在Spring中广泛使用
 
 ## Bean容器的初始化方式
 
-- 本地文件
-FileSystemXmlAppliactionContext context = new FileSystemXmlAppliactionContext("F:xx/xx.xml")
-- Classpath
-ClasspathXmlAppliactionContext context = new ClasspathXmlAppliactionContext("classpath:spring-context.xml")
-- Web应用中依赖servlet或listener
-org.springframework.web.context.ContextLoaderListener/Servlet
+- **本地文件**
+
+`FileSystemXmlAppliactionContext context = new FileSystemXmlAppliactionContext("F:xx/xx.xml")`
+- **Classpath**
+
+`ClasspathXmlAppliactionContext context = new ClasspathXmlAppliactionContext("classpath:spring-context.xml")`
+
+- **Web应用中依赖servlet或listener**
+
+`org.springframework.web.context.ContextLoaderListener/Servlet`
 
 
 
 # IoC/DI
 
-当需要一个对象时，不自己去创建这个对象，而是向spring申请，从IoC容器中拿一个出来用。
+当需要一个对象时，不自己去创建这个对象，而是向spring**申请**，从**IoC容器**中拿一个出来用。
 
-实现IoC的方式是依赖注入。
+**实现IoC的方式是依赖注入。**
 
 ## 注入
 1. 设值注入
+
 ```xml
 <property name="injectionDAO" ref="injectionDAO"/>
 ```
 
-通过调用类的set方法注入。
+通过调用**类的set方法**注入。
+
 2. 构造注入
+
 ```xml
 <constructor-arg name="injectionDAO" ref="injectionDAO"/>
 ```
-通过调用类的构造函数注入。
+
+通过调用类的**构造函数**注入。
 
 # AOP
 
@@ -202,35 +227,35 @@ org.springframework.web.context.ContextLoaderListener/Servlet
 
 ## 主要功能 
 
-- 日志记录
-- 性能统计
-- 安全控制
-- 事务处理
-- 异常处理
+1. 日志记录
+2. 性能统计
+3. 安全控制
+4. 事务处理
+5. 异常处理
 
 ## 相关概念
 
-- 切面 Aspect：一个关注点的模块化，可能会横切多个对象
+- 切面 Aspect：一个**关注点**的模块化，可能会**横切**多个对象
 
 - 连接点 Joinpoint : 程序执行过程中的某个特定的点
 
-- 通知 Advice ： 在切面的某个特定的连接点执行的动作
+- 通知 Advice ： 在切面的某个特定的连接点执行的**动作**
 
-- 切入点 Pointcut: 匹配连接点的断言，在AOP中通知和一个切入点表达式关联
+- 切入点 Pointcut: **匹配连接点的断言**，在AOP中通知和一个切入点表达式关联
 
-- 引入 Introduction：在不修改类代码的前提下，为类添加新的方法和属性。可能是借助预编译时修改字节码，如AspectJ
+- 引入 Introduction：在**不修改类代码**的前提下，为类**加新的方法和属性**。可能是借助预编译时修改字节码，如AspectJ
 
-- 目标对象 Target Object, 被一个或多个切面所通知的对象。
+- 目标对象 Target Object, 被一个或多个切面**所通知的对象**。
 
-- AOP代理 AOP Proxy:AOP框架创建的对象，用来实现切面契约（aspect contract）（包括通知方法执行等功能）
+- AOP代理 AOP Proxy:**AOP框架**创建的对象，用来实现切面契约（aspect contract）（包括通知方法执行等功能）
 
-- 织入 Weaving： 把切面连接到其他的应用程序类型或者对象上，并创建一个被通知的对象，分为：编译时织入、类加载时织入、执行时织入
+- 织入 Weaving： 把切面**连接**到其他的应用程序类型或者对象上，并创建一个被通知的对象，分为：*编译时织入、类加载时织入、执行时织入*
 
 ## 通俗理解
 
 ![aop_concept](/img/spring/aop_concept.png)
 
-AOP主要提供的都是一些和核心业务功能关联并不大的辅助功能，拿日志记录一点来说，只需在适当的位置前/后插入记录日志相关的代码。那么每个需要日志记录的关键点，也就是AOP里的**切入点Pointcut**， 都需要前后插入这些代码，也就是执行相关的动作（**通知 Advice**）。这将是很大的工作量。那么我们可以将这些和核心功能关联不大的功能，单独做成模块，这就是一个**切面**。切面是我们开发中同样重要的、垂直于核心功能的一个关注点。那么我们的切面准备好了以后，如何应用于核心业务功能呢?这就需要用到Spring AOP提供框架来进行合适的**引入**。主要有以下几种引入方式：
+AOP主要提供的都是一些和**核心业务功能**关联并不大的**辅助功能**，拿日志记录一点来说，只需在适当的位置前/后插入记录日志相关的代码。那么每个需要日志记录的关键点，也就是AOP里的**切入点Pointcut**， 都需要**前后插入这些代码**，也就是执行相关的动作（**通知 Advice**）。这将是很大的工作量。那么我们可以将这些和核心功能关联不大的功能，**单独做成模块**，这就是一个**切面**。**切面**是我们开发中同样重要的、**垂直于核心功能**的一个**关注点**。那么我们的切面准备好了以后，如何应用于核心业务功能呢? 这就需要用到Spring AOP提供框架来进行合适的**引入**。主要有以下几种引入方式：
 
 - ***AspectJ*** 修改字节码
 - ***CGLib*** 创建类的子类，也就是装饰类, 覆写需要通知的类
@@ -241,7 +266,8 @@ AOP主要提供的都是一些和核心业务功能关联并不大的辅助功�
 ### 代理模式
 
 1. 远程代理
-2. jdk
+2. 动态代理
+3. 静态代理
 
 ### AspectJ
 
@@ -256,5 +282,5 @@ Spring AOP 默认的代理模式，使用JAVA API，使得任何接口（或者�
 如果一个业务对象并没有实现一个接口时使用。
 
 原理：
-运行时生成目标类的子类，Spring 配置这个生成的子类委托方法调用到原来的目标。体现了**装饰模式**，子类来**织入通知**。
-既然是继承，那么类的final方法不能被通知。因为它们不能被覆盖。
+**运行时生成目标类的子类**，Spring 配置这个生成的子类委托方法调用到原来的目标。体现了**装饰模式**，子类来**织入通知**。
+既然是**继承**，那么类的`final`方法不能被**通知**。因为它们不能被**覆盖**。
