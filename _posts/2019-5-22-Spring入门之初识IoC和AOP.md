@@ -28,6 +28,7 @@ tags:
 3. request	**每次http请求**创建一个实例且只在这个**request**有效
 4. session
 5. global session	基于portlet（连接多个系统，例如OA、HR系统）的web应用中有效
+
 - constructor arg 构造器参数
 
 - properties	属性
@@ -104,20 +105,14 @@ tags:
 只需在bean中配置`Autowiring mode`, 或者配置全局的`default-autowire`.
 
 1. NO
-
-默认方式，不采取任何检查
-
+	默认方式，不采取任何检查
 2. byName
-
-检查容器中id与这个bean属性完全一致的bean,并将其与属性自动装配。
-
+	检查容器中id与这个bean属性完全一致的bean,并将其与属性自动装配。
 3. byType
-
-检查容器中与这个bean属性类型相同的bean。
-- 如果只有一个则与之装配。
-- 如果有多个，则抛出异常。
-- 如果没有找到，则无事发生。
-
+	检查容器中与这个bean属性类型相同的bean。
+	- 如果只有一个则与之装配。
+	- 如果有多个，则抛出异常。
+	- 如果没有找到，则无事发生。
 4. Constructor
 
 ## Resources&ResourceLoader
@@ -222,6 +217,7 @@ public interface ResourceLoader{
 通过**预编译方式**和**运行期动态代理**实现程序功能的**统一维护**的技术。
 
 > 预编译： *AspectJ*
+
 > 动态代理：*JDK动态代理*、*CGLib*
 
 
