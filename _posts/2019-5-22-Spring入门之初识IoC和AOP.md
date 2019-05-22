@@ -78,7 +78,7 @@ tags:
 1. 定义
 
 2. 初始化
-全局：
+	全局：
 
 ```xml
 <beans 	...	...	...
@@ -87,16 +87,15 @@ tags:
 </beans>
 ```
 
-具体类：
-- 实现`org.springframework.beans.factory.InitializingBean`接口， 覆盖`afterPropertisSet`方法
-- 配置`init-method`方法
+	具体类：
+	- 实现`org.springframework.beans.factory.InitializingBean`接口， 覆盖`afterPropertisSet`方法
+	- 配置`init-method`方法
 
 3. 使用
 
 4. 销毁
- 
-- 实现`org.springframework.beans.factory.DisposableBean`接口， 覆盖`destory`方法
-- 配置`destory-method`方法
+	- 实现`org.springframework.beans.factory.DisposableBean`接口， 覆盖`destory`方法
+	- 配置`destory-method`方法
 
 
 ## 自动装配
