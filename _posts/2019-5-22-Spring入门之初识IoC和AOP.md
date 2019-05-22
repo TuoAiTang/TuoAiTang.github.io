@@ -75,9 +75,9 @@ tags:
 还有一些其他的注解可以看源码学习， `@Configuration` `@Bean` `@Import` `@DependsOn`。
 
 ## 生命周期
-- 定义
+### 定义
 
-- 初始化
+### 初始化
 全局：
 
 ```xml
@@ -91,11 +91,11 @@ tags:
 - 实现`org.springframework.beans.factory.InitializingBean`接口， 覆盖`afterPropertisSet`方法
 - 配置`init-method`方法
 
-- 使用
+### 使用
 
-- 销毁
-	- 实现`org.springframework.beans.factory.DisposableBean`接口， 覆盖`destory`方法
-	- 配置`destory-method`方法
+### 销毁
+- 实现`org.springframework.beans.factory.DisposableBean`接口， 覆盖`destory`方法
+- 配置`destory-method`方法
 
 
 ## 自动装配
