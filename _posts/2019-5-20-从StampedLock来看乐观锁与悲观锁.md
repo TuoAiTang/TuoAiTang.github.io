@@ -134,4 +134,4 @@ public boolean validate(long stamp) {
 
 乐观锁：适用于多读的情形，提高吞吐量。是一种不直接加锁的策略。都是基于CAS的操作实现。例如：Atomic类，StampedLock中的乐观读。
 
-悲观所锁：ReentrantLock直接锁，synchronized关键字的直接使用，其实悲观锁的实现。常用于写操作比较多，冲突比较多的情形。
+悲观锁：ReentrantLock直接锁，synchronized关键字的直接使用，其实悲观锁的实现。常用于写操作比较多，冲突比较多的情形。
